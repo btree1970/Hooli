@@ -29,8 +29,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @NonNull
     @Override
     public TaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_row, parent, false)
-        return null;
+        View view = LayoutInflater.from(context).inflate(R.layout.recycler_item, parent, false);
+        return new TaskAdapter.ViewHolder(view);
     }
 
 
@@ -38,7 +38,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TaskAdapter.ViewHolder holder, int position) {
-
+          TaskItem item = tasks.get(position);
+          holder.setDetails(item);
     }
 
     @Override

@@ -25,22 +25,22 @@
         <TextView
             android:id="@+id/recycle_title"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:layout_height="wrap_content"
-            android:textColor="@color/abc_primary_text_material_dark"
-            tools:text="Title"
-            android:textSize="16dp"/>
+            android:textColor="#121213"
+            android:textSize="16dp"
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/recycle_description"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:singleLine="true"
-            android:layout_height="wrap_content"
+            android:textColor="#4A4646"
             android:textSize="13dp"
-            android:textColor="@color/abc_secondary_text_material_dark"
-            tools:text="Description"/>
+            tools:text="Description" />
 
 
 <!--        <TextView-->
