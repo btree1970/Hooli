@@ -2,17 +2,20 @@ package com.example.hooli;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskDatabase extends SQLiteOpenHelper {
 
     // database name
     private static final String DATABASE_NAME = "TaskDatabase";
 
-    private static final String TABLE_NAME = "TASK_TABLE"
+    private static final String TABLE_NAME = "TASK_TABLE";
 
 
 
@@ -67,6 +70,88 @@ public class TaskDatabase extends SQLiteOpenHelper {
         values.put(TIME, task.getTime());
         values.put(COMPLETED, task.getCompleted());
 
+        long ID = db.insert(TABLE_NAME, null, values);
+        db.close();
+
+        return (int) ID;
+
+    }
+
+    public TaskItem getTask(int id) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_NAME, new String[]{
+                TITLE,
+                BLOCKING,
+                DATE,
+                TIME,
+                COMPLETED,
+        }, ID + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        TaskItem Task = new TaskItem(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5));
+
+        return Task;
+
+    }
+
+    public List<TaskItem> getAllTasks() {
+        List<TaskItem> TaskItems = new ArrayList<>();
+
+        String query = "SELECT * FROM  " +  TABLE_NAME;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                TaskItem Task = new TaskItem(
+                        Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5)
+                );
+
+                TaskItems.add(Task);
+
+            } while (cursor.moveToNext());
+        }
+
+        return TaskItems;
+    }
+
+    public void deleteTask(TaskItem Item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, ID + "=?",
+                   new String[]{String.valueOf(Item.getId())});
+        db.close();
+    }
+
+    public int updateTask(TaskItem Item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(TITLE, Item.getTitle());
+        values.put(BLOCKING, Item.getBlocking());
+        values.put(DATE, Item.getDate());
+        values.put(TIME, Item.getTime());
+        values.put(COMPLETED, Item.getCompleted());
+
+
+        return db.update(TABLE_NAME, values, ID + "=?",
+                new String[]{String.valueOf(Item.getId())});
     }
 
 
