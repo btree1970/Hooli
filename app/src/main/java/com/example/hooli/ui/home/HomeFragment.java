@@ -1,5 +1,6 @@
 package com.example.hooli.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hooli.R;
 import com.example.hooli.TaskAdapter;
 import com.example.hooli.TaskItem;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ public class HomeFragment extends Fragment {
     private TaskAdapter adapter;
     private ArrayList<TaskItem> TaskItems;
     private RecyclerView.LayoutManager layoutManager;
-
+    private FloatingActionButton AddTaskButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +42,16 @@ public class HomeFragment extends Fragment {
 //            @Override
 //            public void onChanged(@Nullable String s) {
 //                textView.setText(s);
+//            }
+//        });
+
+
+        AddTaskButton = (FloatingActionButton) getView().findViewById(R.id.floatingActionButton);
+
+//        AddTaskButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), AddTaskActicity)
 //            }
 //        });
         recycleView = (RecyclerView) root.findViewById(R.id.recycle_view);
@@ -56,16 +68,16 @@ public class HomeFragment extends Fragment {
         recycleView.addItemDecoration(new DividerItemDecoration(getActivity(),
                 LinearLayoutManager.VERTICAL));
         recycleView.setAdapter(adapter);
-        createListData();
+//        createListData();
 
         return root;
     }
 
-    private void createListData() {
-        TaskItem  item = new TaskItem("Eat Food",  "Make coconunt");
-        TaskItems.add(item);
-        item = new TaskItem("Meeting",  "Get Coconut");
-        TaskItems.add(item);
-    }
+//    private void createListData() {
+//        TaskItem  item = new TaskItem("Eat Food",  "Make coconunt");
+//        TaskItems.add(item);
+//        item = new TaskItem("Meeting",  "Get Coconut");
+//        TaskItems.add(item);
+//    }
 
 }
