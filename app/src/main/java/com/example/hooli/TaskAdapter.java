@@ -52,20 +52,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView recycle_title, recycle_description;
+        private TextView recycle_id, recycle_title;
 
 
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            recycle_title = itemView.findViewById(R.id.recycle_title);
-            recycle_description = itemView.findViewById(R.id.recycle_description);
+            recycle_id = itemView.findViewById(R.id.recycle_title);
+            recycle_title = itemView.findViewById(R.id.recycle_description);
 
         }
 
         public void setDetails(TaskItem Item) {
-            recycle_title.setText(Item.getName());
-            recycle_description.setText(Item.getDesc());
+            recycle_id.setText(Item.getId());
+            recycle_title.setText(Item.getTitle());
 
         }
 

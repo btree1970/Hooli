@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hooli.AddTaskActivity;
 import com.example.hooli.R;
 import com.example.hooli.TaskAdapter;
 import com.example.hooli.TaskItem;
@@ -46,14 +47,15 @@ public class HomeFragment extends Fragment {
 //        });
 
 
-        AddTaskButton = (FloatingActionButton) getView().findViewById(R.id.floatingActionButton);
+        AddTaskButton = (FloatingActionButton) root.findViewById(R.id.floatingActionButton);
 
-//        AddTaskButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), AddTaskActicity)
-//            }
-//        });
+        AddTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AddTaskActivity.class);
+                startActivity(intent);
+            }
+        });
         recycleView = (RecyclerView) root.findViewById(R.id.recycle_view);
 
         recycleView.setHasFixedSize(true);
