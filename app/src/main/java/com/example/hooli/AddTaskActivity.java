@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.Time;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,6 +33,8 @@ public class AddTaskActivity extends AppCompatActivity {
     private String Title;
     private String Date;
     private String Time;
+    private String Repeat;
+    private String Blocking;
 
     private int Year, Month, Hour, Minute, Day;
 
@@ -42,7 +46,6 @@ public class AddTaskActivity extends AppCompatActivity {
     private Button submit_btn;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,11 @@ public class AddTaskActivity extends AppCompatActivity {
         task_title = (EditText) findViewById(R.id.set_task_title);
         task_date = (TextView) findViewById(R.id.set_task_date);
         task_time = (TextView) findViewById(R.id.set_task_time);
+
+
+        Repeat = "true";
+        Blocking = "false";
+
 
         submit_btn = (Button) findViewById(R.id.save_task);
 
@@ -107,6 +115,10 @@ public class AddTaskActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_task_menu, menu);
+    }
 
     // On clicking Time picker
     public void setTime(View v){
@@ -138,6 +150,27 @@ public class AddTaskActivity extends AppCompatActivity {
         date_dialog.show();
 
     }
+    // On clicking the repeat switch
+    public void onSwitchRepeat(View view) {
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            Repeat = "true";
+
+        } else {
+            Repeat = "false";
+
+        }
+    }
+
+    public void onSwitchBlocking(View view) {
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            Blocking = "true";
+        } else {
+            Blocking = "false";
+        }
+    }
+
 
     public void saveTask() {
         TaskDatabase db = new TaskDatabase(this);
@@ -148,7 +181,9 @@ public class AddTaskActivity extends AppCompatActivity {
                       Date,
                       Time,
                       "false",
-                      "false"
+                      Blocking,
+                      Repeat
+
 
                 )
         );

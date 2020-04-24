@@ -19,10 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hooli.AddTaskActivity;
 import com.example.hooli.R;
 import com.example.hooli.TaskAdapter;
+import com.example.hooli.TaskDatabase;
 import com.example.hooli.TaskItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -32,6 +34,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<TaskItem> TaskItems;
     private RecyclerView.LayoutManager layoutManager;
     private FloatingActionButton AddTaskButton;
+    private TaskDatabase db;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +50,10 @@ public class HomeFragment extends Fragment {
 //        });
 
 
+
+
+
+
         AddTaskButton = (FloatingActionButton) root.findViewById(R.id.floatingActionButton);
 
         AddTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -58,14 +65,14 @@ public class HomeFragment extends Fragment {
         });
         recycleView = (RecyclerView) root.findViewById(R.id.recycle_view);
 
+        db  = new TaskDatabase(getContext());
+        List<TaskItem> all_tasks = db.getAllTasks();
+
         recycleView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
-
         recycleView.setLayoutManager(layoutManager);
 
-
-        TaskItems = new ArrayList<>();
-        adapter = new TaskAdapter(getActivity(), TaskItems);
+        adapter = new TaskAdapter(getActivity(), all_tasks);
         recycleView.setAdapter(adapter);
         recycleView.addItemDecoration(new DividerItemDecoration(getActivity(),
                 LinearLayoutManager.VERTICAL));
