@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.Time;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
@@ -44,6 +46,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private TextView task_date;
     private TextView task_time;
     private Button submit_btn;
+    private Toolbar tool_bar;
 
 
     @Override
@@ -54,7 +57,12 @@ public class AddTaskActivity extends AppCompatActivity {
         task_title = (EditText) findViewById(R.id.set_task_title);
         task_date = (TextView) findViewById(R.id.set_task_date);
         task_time = (TextView) findViewById(R.id.set_task_time);
-
+        tool_bar = (Toolbar) findViewById(R.id.toolbar);
+        
+        setSupportActionBar(tool_bar);
+        getSupportActionBar().setTitle("Add Task");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         Repeat = "true";
         Blocking = "false";
@@ -115,9 +123,38 @@ public class AddTaskActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.add_task_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            case R.id.save_reminder:
+                if (task_title.getText().length() == 0) {
+                    task_title.setError("Task title can't be empty!");
+                } else {
+                    saveTask();
+                }
+                return true;
+
+            case R.id.discard_reminder:
+                Toast.makeText(getApplicationContext(), "Discarded",
+                             Toast.LENGTH_SHORT).show();
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     // On clicking Time picker
